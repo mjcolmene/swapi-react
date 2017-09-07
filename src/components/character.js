@@ -13,18 +13,24 @@ class Character extends Component {
 
 	componentDidMount() {
 		const charList = [];
+
 		const getResults = (req) => {
 			axios.get(req).then((res) => {
-				console.log('res',res.data.results);
-				charList.push(...res.data.results);
-				console.log(charList);
+				// console.log('res',res.data.results);
+				// console.log(charList);
 				if (res.data.next) {
 					console.log(res.data.next);
 					getResults(res.data.next);
 				}
+				charList.push(...res.data.results);
+				
+				const characters = charList.map((obj => <div key={obj.name.toString()}>{obj.name}</div>));
+				this.setState({ characters });
+				console.log(res.data.results);
 			});
-
+				return charList;
 		}
+			// console.log('final charList', charList);
 		getResults('https://swapi.co/api/people/');
 
 		// axios.get('https://swapi.co/api/people/').then((result) => {
@@ -36,9 +42,11 @@ class Character extends Component {
 		// 		});
 		// 	}
 
-		// 	const characters = result.data.results.map((obj => <div key={obj.name.toString()}>{obj.name}</div>));
-		// 	console.log(characters);
-		// 	this.setState({ characters });
+		// console.log('this is our final charList', charList);
+
+		//  	const characters = result.data.results.map((obj => <div key={obj.name.toString()}>{obj.name}</div>));
+		//  	console.log(characters);
+		//  	this.setState({ characters });
 
 		// });
 	}
