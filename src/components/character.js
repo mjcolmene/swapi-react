@@ -14,21 +14,24 @@ class Character extends Component {
 	componentDidMount() {
 		const charList = [];
 
+		/** Recursively find all the people from the API
+		*   @param	{req} string - the request URL for the SWAPI. In this case it is static
+		*	@return	{void}
+		*/
 		const getResults = (req) => {
+			// axios does the get
 			axios.get(req).then((res) => {
-				// console.log('res',res.data.results);
-				// console.log(charList);
+				// if there is a next page, go get it
 				if (res.data.next) {
-					console.log(res.data.next);
 					getResults(res.data.next);
 				}
+				// build our array of objects
 				charList.push(...res.data.results);
+				console.log(charList);
 				
-				const characters = charList.map((obj => <div key={obj.name.toString()}>{obj.name}</div>));
-				this.setState({ characters });
-				console.log(res.data.results);
+				const characterMap = charList.map((obj => <div key={obj.name} >{obj.name}</div>));
+				this.setState({ characterMap });
 			});
-				return charList;
 		}
 			// console.log('final charList', charList);
 		getResults('https://swapi.co/api/people/');
@@ -55,7 +58,7 @@ class Character extends Component {
 		return ( 
 			<div>
 				<h2> This is where the character list will be</h2>
-				{ this.state.characters }
+				{ this.state.characterMap }
 			</div>
 		);
 	}
