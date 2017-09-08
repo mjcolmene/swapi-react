@@ -9,7 +9,7 @@ class Character extends Component {
 			<div>
 				<h2>My name is {this.props.data.name}</h2>
 				<h3>Here are my details!</h3>
-				{Object.keys(this.props.data).map((key) => { return <li>{key}: {this.props.data[key]}</li>})}
+				{Object.keys(this.props.data).map((key) => { return <p>{key}: {this.props.data[key]}</p>})}
 			</div>
 		);
 	}
