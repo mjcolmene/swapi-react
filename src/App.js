@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import  Character from './components/character.js';
+import  List from './components/list.js';
 
 class App extends Component {
   render() {
@@ -9,7 +9,7 @@ class App extends Component {
         <div className="App-header">
           <h2>SWAPI React Example</h2>
         </div>
-      <Character />        
+      <List />        
       </div>
     );
   }
