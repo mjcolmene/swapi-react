@@ -23,9 +23,9 @@ class List extends Component {
 			axios.get(req).then((res) => {
 				console.log(res)
 				// if there is a next page, go get it
-				if (res.data.next) {
-					getResults(res.data.next);
-				}
+				// if (res.data.next) {
+				// 	getResults(res.data.next);
+				// }
 				// build our array of objects
 				charList.push(...res.data.results);
 				console.log(charList);
