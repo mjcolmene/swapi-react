@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import Character from './character.js'
+
+import Character from './character.js';
+import { getResults } from '../Actions.js';
 
 class List extends Component {
 
@@ -11,31 +12,38 @@ class List extends Component {
 		};
 	}
 
-	componentDidMount() {
-		const charList = [];
+	componentWillMount() {
+		const newState = this.state;
+		newState.characters = getResults('https://swapi.co/api/people/');
+		console.log(newState);
+		this.setState( newState );
 
-		/** Recursively find all the people from the API
-		*   @param	{req} string - the request URL for the SWAPI. In this case it is static
-		*	@return	{void}
-		*/
-		const getResults = (req) => {
-			// axios does the get
-			axios.get(req).then((res) => {
-				console.log(res)
-				// if there is a next page, go get it
-				// if (res.data.next) {
-				// 	getResults(res.data.next);
-				// }
-				// build our array of objects
-				charList.push(...res.data.results);
-				console.log(charList);
+
+
+		// const charList = [];
+
+		// /** Recursively find all the people from the API
+		// *   @param	{req} string - the request URL for the SWAPI. In this case it is static
+		// *	@return	{void}
+		// */
+		// const getResults = (req) => {
+		// 	// axios does the get
+		// 	axios.get(req).then((res) => {
+		// 		console.log(res)
+		// 		// if there is a next page, go get it
+		// 		// if (res.data.next) {
+		// 		// 	getResults(res.data.next);
+		// 		// }
+		// 		// build our array of objects
+		// 		charList.push(...res.data.results);
+		// 		console.log(charList);
 				
-				const characterMap = charList.map((obj => <Character key={obj.name} data={obj} />));
-				this.setState({ characterMap });
-			});
+		// 		const characterMap = charList.map((obj => <Character key={obj.name} data={obj} />));
+		// 		this.setState({ characterMap });
+		// 	});
 		}
 			// console.log('final charList', charList);
-		getResults('https://swapi.co/api/people/');
+		//getResults('https://swapi.co/api/people/');
 
 		// axios.get('https://swapi.co/api/people/').then((result) => {
 		// 	if(result.data.next) {
@@ -53,13 +61,15 @@ class List extends Component {
 		//  	this.setState({ characters });
 
 		// });
-	}
+	
 
 	render() {
+		console.log('this.state',this.state);
 		return ( 
 			<div>
 				<h2> This is where the character list will be</h2>
-				{ this.state.characterMap }
+				<Character data={this.state.characters} />
+				{ this.state.characters }
 			</div>
 		);
 	}
